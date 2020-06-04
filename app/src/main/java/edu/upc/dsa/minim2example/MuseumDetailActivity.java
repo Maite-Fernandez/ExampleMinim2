@@ -59,6 +59,7 @@ public class MuseumDetailActivity extends AppCompatActivity {
         escudo = (ImageView) findViewById(R.id.imageescudo);
         bandera = (ImageView) findViewById(R.id.imagebandera);
         museum = getIntent().getParcelableExtra("Element");
+
         getInfo();
     }
 
@@ -80,10 +81,10 @@ public class MuseumDetailActivity extends AppCompatActivity {
         hab.append(museum.getRelMunicipis().getNombreHabitants());
         extension.append(museum.getRelMunicipis().getExtensio());
         altitud.append(museum.getRelMunicipis().getAltitud());
-        if (museum.getRelMunicipis().getMunicipiEscut() != null || !museum.getRelMunicipis().getMunicipiEscut().isEmpty()) {
+        if (museum.getRelMunicipis().getMunicipiEscut() != null && !museum.getRelMunicipis().getMunicipiEscut().isEmpty()&&!museum.getRelMunicipis().getMunicipiEscut().equals("")) {
             Picasso.get().load(museum.getRelMunicipis().getMunicipiEscut()).into(escudo);
         }
-        if (museum.getRelMunicipis().getMunicipiBandera() != null || !museum.getRelMunicipis().getMunicipiBandera().isEmpty()) {
+        if (museum.getRelMunicipis().getMunicipiBandera() != null && !museum.getRelMunicipis().getMunicipiBandera().isEmpty()&&!museum.getRelMunicipis().getMunicipiBandera().equals("")) {
             Picasso.get().load(museum.getRelMunicipis().getMunicipiBandera()).into(bandera);
         }
     }
