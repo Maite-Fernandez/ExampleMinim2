@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Element {
+public class Element implements Parcelable{
 
     @SerializedName("punt_id")
     @Expose
@@ -103,7 +103,19 @@ public class Element {
         iniciHorariHivern = in.readString();
         iniciHorariEstiu = in.readString();
     }
-    
+
+
+    public static final Creator<Element> CREATOR = new Creator<Element>() {
+        @Override
+        public Element createFromParcel(Parcel in) {
+            return new Element(in);
+        }
+
+        @Override
+        public Element[] newArray(int size) {
+            return new Element[size];
+        }
+    };
 
     public String getPuntId() {
         return puntId;
@@ -289,4 +301,33 @@ public class Element {
         this.iniciHorariEstiu = iniciHorariEstiu;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(puntId);
+        parcel.writeString(adrecaNom);
+        parcel.writeString(descripcio);
+        parcel.writeParcelable(grupAdreca, i);
+        parcel.writeString(localitzacio);
+        parcel.writeStringList(imatge);
+        parcel.writeString(urlGeneral);
+        parcel.writeStringList(email);
+        parcel.writeStringList(telefonContacte);
+        parcel.writeString(horaris);
+        parcel.writeParcelable(relMunicipis, i);
+        parcel.writeParcelable(relTemes, i);
+        parcel.writeStringList(tags);
+        parcel.writeStringList(categoria);
+        parcel.writeStringList(relComarca);
+        parcel.writeString(idSecundari);
+        parcel.writeString(cercadorCodi);
+        parcel.writeString(director);
+        parcel.writeStringList(urlRelacionades);
+        parcel.writeString(iniciHorariHivern);
+        parcel.writeString(iniciHorariEstiu);
+    }
 }

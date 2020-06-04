@@ -58,31 +58,16 @@ public class MuseumDetailActivity extends AppCompatActivity {
 
         escudo = (ImageView) findViewById(R.id.imageescudo);
         bandera = (ImageView) findViewById(R.id.imagebandera);
-
+        museum = getIntent().getParcelableExtra("Element");
         getInfo();
     }
+
     //User Notifier Handler using Toast
-    private void NotifyUser(String MSG){
-        Toast toast = Toast.makeText(MuseumDetailActivity.this,MSG,Toast.LENGTH_SHORT);
+    private void NotifyUser(String MSG) {
+        Toast toast = Toast.makeText(MuseumDetailActivity.this, MSG, Toast.LENGTH_SHORT);
         toast.show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //If login activity closed means the user has logged in
-        if (requestCode == 2) {
-                if (data != null) {
-                    museum = data.getParcelableExtra("Museum");
-                    Log.w("s", "Test");
-                } else {
-                    NotifyUser("Could not retreive data");
-                    Intent returnIntent = new Intent();
-                    setResult(Activity.RESULT_OK,returnIntent);
-                    finish();
-                }
-        }
-    }
 
     public void getInfo() {
         direccion.append(museum.getAdrecaNom());
@@ -95,8 +80,11 @@ public class MuseumDetailActivity extends AppCompatActivity {
         hab.append(museum.getRelMunicipis().getNombreHabitants());
         extension.append(museum.getRelMunicipis().getExtensio());
         altitud.append(museum.getRelMunicipis().getAltitud());
-
-        Picasso.get().load(museum.getRelMunicipis().getMunicipiEscut()).into(escudo);
-        Picasso.get().load(museum.getRelMunicipis().getMunicipiBandera()).into(bandera);
+        if (museum.getRelMunicipis().getMunicipiEscut() != null || !museum.getRelMunicipis().getMunicipiEscut().isEmpty()) {
+            Picasso.get().load(museum.getRelMunicipis().getMunicipiEscut()).into(escudo);
+        }
+        if (museum.getRelMunicipis().getMunicipiBandera() != null || !museum.getRelMunicipis().getMunicipiBandera().isEmpty()) {
+            Picasso.get().load(museum.getRelMunicipis().getMunicipiBandera()).into(bandera);
+        }
     }
 }
