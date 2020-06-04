@@ -37,7 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     // RETROFIT OBJECT
     private static Retrofit retrofit;
-
+    private SharedPreferences.Editor editor;
+    private SharedPreferences preferences;
     //MUSEUM SERVICE OBJECT
     MuseumService museumService;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         progressBar= findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
+
         //After launch check if a user exists in preferences and also set the player
         if(!ExistUserLogged()){
             LaunchLoginActivity();
@@ -66,7 +68,13 @@ public class MainActivity extends AppCompatActivity {
             LoginUser();
         }
     }
-
+    public void logoutbuttonfunction(final View view) {
+        preferences = getSharedPreferences("UserInfo", 0);
+        editor = preferences.edit();
+        editor.clear();
+        editor.commit();
+        LaunchLoginActivity();
+    }
     private void LoginUser() {
         String username, password;
         username = user.getUsername();
